@@ -8,4 +8,8 @@ Once you have the code, and next time you receive a ***scam*** text, open the UR
 
 This program will send requests **extremely** quickly to the site. 
 
+#### Port Scanner
+##### Accepts IP Addresses & Domain Names
+
+Enter the last port number you want the scanner to check (65535 = **All**) and the scanner will go from 1 to your selection, printing out whether or not the ports are open.
 
