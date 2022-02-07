@@ -10,6 +10,7 @@ def checkIP(ip):
     except ValueError:
         return socket.gethostbyname(ip)
 
+# noinspection PyBroadException
 
 
 def port_scan(ipaddress, port):
@@ -23,7 +24,8 @@ def port_scan(ipaddress, port):
         print('[-] Port ' + str(port) + ' is Closed')
 
 
-port = range(0, 1000)
+port = int(input("Enter the last port number you want to scan: "))
+port = range(port)
 IPADDRESS = input("$ Enter Target to Scan: ")
 converted_ip = checkIP(IPADDRESS)
 
