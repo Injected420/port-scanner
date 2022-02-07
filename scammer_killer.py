@@ -5,7 +5,7 @@ import threading
 import socket
 
 #Copy URL from Scam message
-url = ""
+url = str(input("Enter Scam URL: "))
 
 #In the console copy the request headers/data sent
 
