@@ -10,8 +10,6 @@ def checkIP(ip):
     except ValueError:
         return socket.gethostbyname(ip)
 
-# noinspection PyBroadException
-
 
 def port_scan(ipaddress, port):
     try:
