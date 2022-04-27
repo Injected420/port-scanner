@@ -1,7 +1,10 @@
 import socket
+import threading
 import IPy as ipy
-import requests
+import datetime
+import sys
 
+START = datetime.datetime.now()
 
 def checkIP(ip):
     try:
@@ -14,18 +17,26 @@ def checkIP(ip):
 def port_scan(ipaddress, port):
     try:
         sock = socket.socket()
-        sock.settimeout(0.25)
+        sock.settimeout(0.10)
         sock.connect((ipaddress, port))
-        print('[+] Port ' + str(port) + ' is Open.')
+        print("Port ** %d ** is Open" % port)
 
     except:
-        print('[-] Port ' + str(port) + ' is Closed')
+        print("Port %d Closed" % port)
 
 
-port = int(input("Enter the last port number you want to scan: "))
-port = range(port)
-IPADDRESS = input("$ Enter Target to Scan: ")
-converted_ip = checkIP(IPADDRESS)
+if __name__ == "__main__":
 
-for i in port:
-    port_scan(converted_ip, port[i])
+    
+    IPADDRESS = input("$ Enter Target to Scan: ")
+    port = int(input("$ Enter the last port number you want to scan: "))
+    port = range(port)
+    print("Scan of", socket.gethostbyname(IPADDRESS), "started at", START)
+
+    converted_ip = checkIP(IPADDRESS)
+
+    def do_scan():
+        for i in port:
+            port_scan(converted_ip, port[i])
+
+    do_scan()
