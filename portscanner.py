@@ -28,12 +28,12 @@ def port_scan(ipaddress, port):
         print('[-] Port %d CLOSED' % port)
 
 IPADDRESS = input("$ Enter Target to Scan: ")
-port = (input("$ Enter the last port number you want to scan: \r\nOr Enter 'C' if you want to scan the most common ports (1-1024): "))
+port = (input("$ Enter the last port number you want to scan: \r\n$Or Enter 'C' if you want to scan the most common ports (1-1024): "))
 if port == "C" or "c":
     port = range(1024)
 else:
     port = range(port)
-print(socket.gethostbyname(IPADDRESS), "started at", START)
+print("[*]Host:",socket.gethostbyname(IPADDRESS), "scan started at", START)
 converted_ip = checkIP(IPADDRESS)
 def do_scan():
         for i in port:
