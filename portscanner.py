@@ -1,16 +1,31 @@
-import sys
 import socket
 import threading
 import IPy as ipy
 import requests
+import sys
 import datetime
 
+
+class Color:
+    RESET = "\033[0m"
+    RED = "\033[31m"
+    GREEN = "\033[32m"
+    YELLOW = "\033[33m"
+    BLUE = "\033[34m"
+    MAGENTA = "\033[35m"
+    CYAN = "\033[36m"
+    WHITE = "\033[37m"
+    BOLD = "\033[1m"
+    UNDERLINE = "\033[4m"
+
+
 START = datetime.datetime.now()
+
 
 def checkIP(ip):
     try:
         ipy.IP(ip)
-        return(ip)
+        return (ip)
     except ValueError:
         return socket.gethostbyname(ip)
 
@@ -20,31 +35,30 @@ def port_scan(ipaddress, port):
         sock = socket.socket()
         sock.settimeout(0.10)
         sock.connect((ipaddress, port))
-        print('[+] Port **%d** OPEN' % port)
+        print(
+            f'{Color.GREEN}[+]{Color.RESET} Port: {Color.BOLD}{port}{Color.RESET} is Open.')
     except KeyboardInterrupt:
-        print("\r\n[!]Program exited by user.")
+        print(f"\r\n{Color.RED}[!]{Color.RESET} Program exited by user")
         sys.exit(1)
     except:
-        print('[-] Port %d CLOSED' % port)
-try:
-    IPADDRESS = input("$ Enter Target to Scan: ")
-except KeyboardInterrupt:
-    print("\r\n[!]Program exited by user.")
-    sys.exit(1)
-try:
-    port = (input("$ Enter the last port number you want to scan \r\n$ Enter 'C' if you want to scan the most common ports (1-1024): "))
-    if port == "C" or "c":
-        port = range(1024)
-    else:
-        port = range(port)
-except KeyboardInterrupt:
-    print("\r\n[!]Program exited by user.")
-    sys.exit(1)
-print("[*]Host:",socket.gethostbyname(IPADDRESS), "scan started at", START)
-converted_ip = checkIP(IPADDRESS)
+        print(
+            f'{Color.YELLOW}[-]{Color.RESET} Port: {Color.BOLD}{port}{Color.RESET} is Closed')
+
 
 def do_scan():
-        for i in port:
-            port_scan(converted_ip, port[i])
+    try:
+        IPADDRESS = input(f"{Color.BLUE}${Color.RESET} Enter Target to Scan: ")
+        port = int(input(
+            f"{Color.BLUE}${Color.RESET} Enter the last port number you want to scan: "))
+
+        converted_ip = checkIP(IPADDRESS)
+
+        for i in range(1, port + 1):
+            port_scan(converted_ip, i)
+    except KeyboardInterrupt:
+        print(f"\n[{Color.MAGENTA}*{Color.RESET}] Scanning Ended by user {Color.BOLD}{Color.CYAN}(Ctrl+c){Color.RESET}. Exiting...\n")
+        sys.exit()
+    print("[*]Host:", socket.gethostbyname(IPADDRESS), "scan started at", START)
+
 
 do_scan()
